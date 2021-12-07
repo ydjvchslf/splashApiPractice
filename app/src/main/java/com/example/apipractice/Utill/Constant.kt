@@ -1,8 +1,9 @@
 package com.example.apipractice.Utill
 
 object Constant {
-    const val TAG: String = "로그"
+    const val TAG = "로그"
     const val BASE_URL = "https://api.unsplash.com"
+    const val CLIENT_ID = "I8UBuRXH62hCqOiAjpIygpDV0NTNhOfKmvMchS1sYwM"
 }
 
 enum class SEARCH_TYPE {
