@@ -8,8 +8,10 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import com.example.apipractice.Utill.Constant.TAG
+import com.example.apipractice.Utill.RESPONSE_STATE
 import com.example.apipractice.Utill.SEARCH_TYPE
 import com.example.apipractice.Utill.onMyTextChanged
+import com.example.apipractice.Utill.retrofit.RetrofitManager
 import com.example.apipractice.databinding.ActivityMainBinding
 import com.example.apipractice.databinding.LayoutButtonSearchBinding
 
@@ -74,6 +76,21 @@ class MainActivity : AppCompatActivity() {
             Log.d(TAG, "검색버튼 클릭 / currentSearchType : $currentSearchType")
             binding.frameSearchBtn.searchBtn.text = "검색중"
             binding.frameSearchBtn.progressBar.visibility = View.VISIBLE
+
+            val keyword = binding.searchTermEditText.text.toString()
+
+            RetrofitManager.searchPhotos(keyword, completion = {
+                responseState, responseBody ->
+                when(responseState) {
+                    RESPONSE_STATE.OKAY -> {
+                        Toast.makeText(this, "호출성공!", Toast.LENGTH_SHORT).show()
+                    }
+                    RESPONSE_STATE.FAIL -> {
+                        Toast.makeText(this, "호출실패ㅡㅡ", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            })
+
         }
 
 
