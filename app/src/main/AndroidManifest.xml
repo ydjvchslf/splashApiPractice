@@ -21,6 +21,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!-- 액티비티 추가는 여기에 꼭 해줘야해! frag는 안해줘도 됨 -->
+        <activity android:name=".PhotoCollectionActivity"/>
     </application>
+
 
 </manifest>

@@ -1,5 +1,6 @@
 package com.example.apipractice
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -85,6 +86,24 @@ class MainActivity : AppCompatActivity() {
                     RESPONSE_STATE.OKAY -> {
                         Toast.makeText(this, "MainActivity - 호출성공!", Toast.LENGTH_SHORT).show()
                         Log.d(TAG, "response OK! / reponseBody : ${response?.size}") // 10개씩 제공
+
+                        //response헷갈리니까 변수로 정리
+                        val photoArrayList = response
+
+                        //activity_photo를 호출하고 데이터 전달하기 위해
+                        val intent = Intent(this, PhotoCollectionActivity::class.java)
+                        //번들로 data로 담을거야 //직렬화로 줄여서 넘기 (이거 찾아보기)
+                        val bundle = Bundle()
+                        bundle.putSerializable("photo_array_list", photoArrayList)
+                        intent.putExtra("array_bundle", bundle)
+                        intent.putExtra("keyword", keyword)
+
+//                        //번들에 안담구 그냥 intent안에 다담으면 안됨??
+//                        // 번들에 ArrayList담으려면 꼭 직렬화로 해서 번틀로 넘겨야함?
+//                        intent.putExtra("photoArrayList", photoArrayList)
+//                        intent.putExtra("keyword", keyword)
+
+                        startActivity(intent)
 
                     }
                     RESPONSE_STATE.FAIL -> {
