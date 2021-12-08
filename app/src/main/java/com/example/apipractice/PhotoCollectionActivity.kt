@@ -4,16 +4,26 @@ import android.os.Bundle
 import android.os.PersistableBundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.apipractice.Utill.Constant.TAG
+import com.example.apipractice.databinding.ActivityPhotoBinding
 import com.example.apipractice.model.Photo
+import com.example.apipractice.recyclerView.PhotoRecyclerApater
 
 class PhotoCollectionActivity : AppCompatActivity(){
 
     private val photoList = ArrayList<Photo>()
 
+    //뷰바인딩
+    private var mBinding : ActivityPhotoBinding? = null
+    private val binding get() = mBinding!!
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_photo)
+        //setContentView(R.layout.activity_photo)
+        mBinding = ActivityPhotoBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         Log.d(TAG, "PhotoCollectionActivity - onCreate() 호출")
 
@@ -28,7 +38,11 @@ class PhotoCollectionActivity : AppCompatActivity(){
 
        Log.d(TAG, "PhotoCollectionActivity - Main에서 전달받은 intent 확인 / photoArrayList.size: ${photoList.count()}, keyword: $keyword")
 
-
+    //만든 어댑터 설정
+        binding.photoRecyclerView.apply {
+            layoutManager = GridLayoutManager(this@PhotoCollectionActivity, 2)
+            adapter = PhotoRecyclerApater(photoList)
+        }
 
     }
 }
