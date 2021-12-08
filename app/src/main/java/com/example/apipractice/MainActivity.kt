@@ -80,16 +80,16 @@ class MainActivity : AppCompatActivity() {
             val keyword = binding.searchTermEditText.text.toString()
 
             RetrofitManager.searchPhotos(keyword, completion = {
-                responseState, response ->
+                responseState, response -> //response : ArrayListof<Photo>
                 when(responseState) {
                     RESPONSE_STATE.OKAY -> {
-                        Toast.makeText(this, "호출성공!", Toast.LENGTH_SHORT).show()
-                        Log.d(TAG, "response OK! / reponseBody : $response")
+                        Toast.makeText(this, "MainActivity - 호출성공!", Toast.LENGTH_SHORT).show()
+                        Log.d(TAG, "response OK! / reponseBody : ${response?.size}") // 10개씩 제공
 
                     }
                     RESPONSE_STATE.FAIL -> {
-                        Toast.makeText(this, "호출실패ㅡㅡ", Toast.LENGTH_SHORT).show()
-                        Log.d(TAG, "response No! / t : $response")
+                        Toast.makeText(this, "MainActivity 호출실패ㅡㅡ", Toast.LENGTH_SHORT).show()
+                        Log.d(TAG, "response No!")
                     }
                 }
             })

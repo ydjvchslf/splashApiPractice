@@ -1,6 +1,9 @@
 package com.example.apipractice.Utill.retrofit
 
+import android.os.Looper
 import android.util.Log
+import android.widget.Toast
+import com.example.apipractice.App
 import com.example.apipractice.Utill.Constant
 import com.example.apipractice.Utill.Constant.TAG
 import com.example.apipractice.Utill.isJsonArray
@@ -14,6 +17,7 @@ import org.json.JSONObject
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.lang.Exception
+import java.util.logging.Handler
 
 object RetrofitClient {
     private var retrofitClient : Retrofit? = null
@@ -61,7 +65,21 @@ object RetrofitClient {
                     .url(addUrl)
                     .method(originalReq.method, originalReq.body)
                     .build()
-                return chain.proceed(finalUrl)
+                val response = chain.proceed(finalUrl) //response
+
+                when (response.code) {
+                    200 ->
+                        android.os.Handler(Looper.getMainLooper()).post(){
+                            Toast.makeText(App.instance, "${response.code} 성공입니다", Toast.LENGTH_SHORT).show()
+                        }
+                    else ->
+                        android.os.Handler(Looper.getMainLooper()).post(){
+                            Toast.makeText(App.instance, "${response.code} 실패입니다", Toast.LENGTH_SHORT).show()
+                        }
+
+                }
+
+                return response
             }
         })
 
