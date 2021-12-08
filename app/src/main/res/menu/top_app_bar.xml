@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/search"
+        android:icon="@drawable/search"
+        android:title="검색"
+        android:contentDescription="사진을검색한다.."
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/more"
+        android:icon="@drawable/ic_baseline_more_horiz_24"
+        android:title="더보기"
+        android:contentDescription="더보기..."
+        app:showAsAction="ifRoom" />
+
+</menu>
+
+<!-- activity_photo에서 menu를 넣어줄때 @menu 라고 되어있으므로
+ 꼭 res에서 menu 패키지를 만들고 그안에 menu.xml 을 만들어서 해야함 -->

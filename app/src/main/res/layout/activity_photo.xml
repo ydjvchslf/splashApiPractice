@@ -8,12 +8,32 @@
     tools:context=".PhotoCollectionActivity"
     android:orientation="vertical">
 
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:liftOnScroll="true" >
+        <!-- app:liftOnScrollTargetViewId="photo_recycler_view">  몬지몰겟어-->
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/topAppBar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:title="사진검색"
+            app:menu="@menu/top_app_bar"
+            app:navigationIcon="@drawable/menu"
+            style="@style/Widget.MaterialComponents.Toolbar.Primary"
+            />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/photo_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager" />
 
-
-
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+<!-- material design 에서 제공하는 app bars 똑같이 쓸라고 coordinatorlayout 한거야-->
+<!-- layout_behavior 함으로써 app bar랑 중첩이 되어있었는데, 그 밑으로 내려감-->
