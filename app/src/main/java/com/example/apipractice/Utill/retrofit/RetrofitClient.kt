@@ -68,10 +68,12 @@ object RetrofitClient {
                 val response = chain.proceed(finalUrl) //response
 
                 when (response.code) {
-                    200 ->
+                    200 -> //핸들러 : 사이클 관리
+
                         android.os.Handler(Looper.getMainLooper()).post(){
                             Toast.makeText(App.instance, "${response.code} 성공입니다", Toast.LENGTH_SHORT).show()
                         }
+
                     else ->
                         android.os.Handler(Looper.getMainLooper()).post(){
                             Toast.makeText(App.instance, "${response.code} 실패입니다", Toast.LENGTH_SHORT).show()

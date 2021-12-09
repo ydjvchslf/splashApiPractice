@@ -12,6 +12,7 @@ import com.example.apipractice.R
 import com.example.apipractice.databinding.PhotoItemBinding
 import com.example.apipractice.model.Photo
 
+//TODO 생성자에 data 바로 받지 않게 리팩토링, 2단계 : 원래는 뷰모델리스트를 받아야 함
 class PhotoRecyclerApater(val items: ArrayList<Photo>)
     : RecyclerView.Adapter<PhotoRecyclerApater.PhotoViewHolder>() {
 

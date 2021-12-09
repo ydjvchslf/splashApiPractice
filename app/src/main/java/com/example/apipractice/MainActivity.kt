@@ -97,6 +97,7 @@ class MainActivity : AppCompatActivity() {
                         bundle.putSerializable("photo_array_list", photoArrayList)
                         intent.putExtra("array_bundle", bundle)
                         intent.putExtra("keyword", keyword)
+                        //TODO ViewModel로 빼보기
 
 //                        //번들에 안담구 그냥 intent안에 다담으면 안됨??
 //                        // 번들에 ArrayList담으려면 꼭 직렬화로 해서 번틀로 넘겨야함?

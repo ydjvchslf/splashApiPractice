@@ -38,6 +38,7 @@ object RetrofitManager {
 
                             Log.d(TAG, "받아온 jsonArray 갯수: $sizeOfJsonArray")
 
+                            //TODO forEach로 바꿔볼 것
                             val photoDataArray = arrayListOf<Photo>()
 
                             for(i in 0..jsonArray.size()-1){
