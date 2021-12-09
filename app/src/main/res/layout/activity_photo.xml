@@ -19,21 +19,71 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:title="사진검색"
-            app:menu="@menu/top_app_bar"
+            app:menu="@menu/top_app_bar_menu"
             app:navigationIcon="@drawable/menu"
             style="@style/Widget.MaterialComponents.Toolbar.Primary"
             />
 
     </com.google.android.material.appbar.AppBarLayout>
-
+    <!-- 검색결과 보여주는 리사이클러뷰 -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/photo_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-
         />
+
+    <!-- 검색기록 보기/안보기 선택란, 기록 모두 지우기 imageView와 검색기록 리사이클러뷰 필요 -->
+    <!-- 검색기록 뷰 -->
+    <LinearLayout
+        android:id="@+id/search_history_linear"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FFCFCF"
+        android:visibility="visible"
+        android:orientation="vertical"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/history_switch"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginLeft="5dp"
+                android:checked="true"
+                android:text="검색기록 보기"
+                tools:ignore="MissingConstraints" />
+
+            <Button
+                android:id="@+id/history_delete_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginRight="5dp"
+                android:text="전체삭제"
+                android:textColor="@color/black"
+                android:drawableEnd="@drawable/delete"
+                style="?attr/materialButtonOutlinedStyle"
+                tools:ignore="MissingConstraints" />
+            <!--drawbleStard는 왜 안나올까? -->
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/history_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+            android:visibility="visible"
+            />
+
+    </LinearLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

@@ -3,8 +3,6 @@ package com.example.apipractice
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.Toast
@@ -12,9 +10,8 @@ import com.example.apipractice.Utill.Constant.TAG
 import com.example.apipractice.Utill.RESPONSE_STATE
 import com.example.apipractice.Utill.SEARCH_TYPE
 import com.example.apipractice.Utill.onMyTextChanged
-import com.example.apipractice.Utill.retrofit.RetrofitManager
+import com.example.apipractice.retrofit.RetrofitManager
 import com.example.apipractice.databinding.ActivityMainBinding
-import com.example.apipractice.databinding.LayoutButtonSearchBinding
 
 class MainActivity : AppCompatActivity() {
 

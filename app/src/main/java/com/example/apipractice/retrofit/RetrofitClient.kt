@@ -1,4 +1,4 @@
-package com.example.apipractice.Utill.retrofit
+package com.example.apipractice.retrofit
 
 import android.os.Looper
 import android.util.Log
@@ -17,7 +17,6 @@ import org.json.JSONObject
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.lang.Exception
-import java.util.logging.Handler
 
 object RetrofitClient {
     private var retrofitClient : Retrofit? = null

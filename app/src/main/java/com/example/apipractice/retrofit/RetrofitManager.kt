@@ -1,17 +1,13 @@
-package com.example.apipractice.Utill.retrofit
+package com.example.apipractice.retrofit
 
 import android.util.Log
 import com.example.apipractice.Utill.Constant
 import com.example.apipractice.Utill.Constant.TAG
 import com.example.apipractice.Utill.RESPONSE_STATE
 import com.example.apipractice.model.Photo
-import com.google.android.material.tabs.TabLayout
-import com.google.gson.JsonArray
 import com.google.gson.JsonElement
 import retrofit2.Call
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.create
 
 object RetrofitManager {
     // ApiService 인터페이스 인스턴스 생성
