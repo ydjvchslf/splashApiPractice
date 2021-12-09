@@ -38,11 +38,31 @@ object RetrofitManager {
 
                             Log.d(TAG, "받아온 jsonArray 갯수: $sizeOfJsonArray")
 
-                            //TODO forEach로 바꿔볼 것
                             val photoDataArray = arrayListOf<Photo>()
+//                            for(i in 0 until jsonArray.size()-1){
+//                                val resultObject = (jsonArray.get(i)).asJsonObject
+//                                val user = resultObject.get("user").asJsonObject
+//
+//                                val author = user.get("username").asString
+//                                val likesCount = resultObject.get("likes").asInt
+//                                val createdAt = resultObject.get("created_at").asString
+//                                val urls = resultObject.get("urls").asJsonObject
+//                                val thumbnail = urls.get("thumb").asString
+//
+//                                //Log.d(TAG, "=======잘 파싱 되었나? author: $author, likeCounts: $likesCount, createdAt: $createdAt ,thumbnail: $thumbnail")
+//                                //파싱한 jsonData를 photo로 만들어주기
+//                                val photoItem = Photo(
+//                                    author = author,
+//                                    likesCount = likesCount,
+//                                    createdAt = createdAt,
+//                                    thumbnail = thumbnail
+//                                )
+//                                photoDataArray.add(photoItem)
+//                            }
 
-                            for(i in 0..jsonArray.size()-1){
-                                val resultObject = (jsonArray.get(i)).asJsonObject
+                            //forEach
+                            (0 until jsonArray.size()-1).forEach { index ->
+                                val resultObject = (jsonArray.get(index)).asJsonObject
                                 val user = resultObject.get("user").asJsonObject
 
                                 val author = user.get("username").asString
@@ -61,6 +81,7 @@ object RetrofitManager {
                                 )
                                 photoDataArray.add(photoItem)
                             }
+
                             completion(RESPONSE_STATE.OKAY, photoDataArray)
                         }
                     }
