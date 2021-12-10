@@ -16,16 +16,22 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.apipractice.R
 import com.example.apipractice.Utill.Constant.TAG
+import com.example.apipractice.Utill.SharedPrefManager
 import com.example.apipractice.databinding.ActivityPhotoBinding
 import com.example.apipractice.model.Photo
+import com.example.apipractice.model.SearchHistory
 import com.example.apipractice.recyclerView.PhotoRecyclerApater
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class PhotoCollectionActivity : AppCompatActivity(),
                                 SearchView.OnQueryTextListener, //material내장 써치뷰
                                 CompoundButton.OnCheckedChangeListener,  //material내장 switch
                                 View.OnClickListener // 전체삭제btn 이벤트 쓸라고
+{
 
-                                                                    {
+
     private val photoList = ArrayList<Photo>()
 
     //뷰바인딩
@@ -128,8 +134,35 @@ class PhotoCollectionActivity : AppCompatActivity(),
         //app_bar_menu가 포함되어있는 appBar를 무너뜨리는건가
         this.binding.topAppBar.collapseActionView()
 
+        //TODO:: 검색어 저장 (SharedPref 이용해서)
         //TODO:: 사진검색 api 호출 (제일 마지막에)
-        //TODO:: 검색어 저장
+
+        //검색어 저장
+        //검색히스토리 변수 선언
+        val searchHistory = SearchHistory("", "")
+
+        val searchHistoyList = arrayListOf<SearchHistory>()
+
+        if (query != null) {
+            searchHistory.term = query
+        }
+
+        //검색히스토리 시간 얻어오기
+        val currentTime = Date().time
+        val format = SimpleDateFormat("yyyy-MM-dd")
+
+        val searchTermTime = format.format(currentTime) as String
+
+        Log.d(TAG, "현재시간은? $searchTermTime")
+
+        searchHistory.timeStamp = searchTermTime
+
+        searchHistoyList.add(searchHistory)
+
+        //SharedPre 저장하기
+        SharedPrefManager.storeSearchHistoryList(searchHistoyList)
+
+        Log.d(TAG, "SharedPref 저장된 searchHistoyList : $searchHistoyList")
 
         return true
     }

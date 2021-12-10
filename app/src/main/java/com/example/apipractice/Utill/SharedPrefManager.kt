@@ -14,7 +14,7 @@ object SharedPrefManager {
 
     //검색목록 저장 // SearchHistory List로 받아서 저장
     fun storeSearchHistoryList(searchHistory: MutableList<SearchHistory>){
-        Log.d(TAG, "SharedPrefManager - storeSearchHistoryList() 검색목록 저장")
+        Log.d(TAG, "SharedPrefManager - storeSearchHistoryList() 검색목록 저장 호출")
 
         //매개변수로 들어온 배열->문자열 변환(Gson 이용)
         val searchHistoryListString : String = Gson().toJson(searchHistory)
@@ -33,6 +33,8 @@ object SharedPrefManager {
 
     //검색목록 가져오기
     fun getStoreSearchHistoryList() : MutableList<SearchHistory>?{
+        Log.d(TAG, "SharedPrefManager - getStoreSearchHistoryList() 검색목록 조회 호출")
+
         val shared = App.instance.getSharedPreferences(SHARED_SEARCH_HISTORY, Context.MODE_PRIVATE)
 
         val storedSearchHistoryListString = shared.getString(KEY_SEARCH_HISTORY, "")!!
