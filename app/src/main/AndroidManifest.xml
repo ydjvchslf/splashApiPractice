@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApp">
         <activity
-            android:name=".MainActivity"
+            android:name=".activity.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,7 +22,7 @@
             </intent-filter>
         </activity>
         <!-- 액티비티 추가는 여기에 꼭 해줘야해! frag는 안해줘도 됨 -->
-        <activity android:name=".PhotoCollectionActivity"/>
+        <activity android:name=".activity.PhotoCollectionActivity"/>
     </application>
 
 

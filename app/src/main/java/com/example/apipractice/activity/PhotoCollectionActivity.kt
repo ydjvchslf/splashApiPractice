@@ -1,23 +1,20 @@
-package com.example.apipractice
+package com.example.apipractice.activity
 
 import android.app.SearchManager
 import android.content.Context
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.text.InputFilter
 import android.util.Log
 import android.view.Menu
 import android.view.View
-import android.widget.Button
 import android.widget.CompoundButton
 import android.widget.EditText
 import android.widget.Toast
 //import android.widget.SearchView
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.ui.graphics.Color
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.apipractice.R
 import com.example.apipractice.Utill.Constant.TAG
 import com.example.apipractice.databinding.ActivityPhotoBinding
 import com.example.apipractice.model.Photo
