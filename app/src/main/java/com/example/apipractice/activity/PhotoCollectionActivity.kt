@@ -167,7 +167,7 @@ class PhotoCollectionActivity : AppCompatActivity(),
 
         //검색히스토리 시간 얻어오기, ShardPref 저장하기
         val currentTime = Date().time
-        val format = SimpleDateFormat("yyyy-MM-dd")
+        val format = SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
 
         val searchTermTime = format.format(currentTime) as String
 
@@ -223,7 +223,7 @@ class PhotoCollectionActivity : AppCompatActivity(),
 
                         //검색히스토리 시간 얻어오기, ShardPref 저장하기
                         val currentTime = Date().time
-                        val format = SimpleDateFormat("yyyy-MM-dd")
+                        val format = SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
 
                         val searchTermTime = format.format(currentTime) as String
 
