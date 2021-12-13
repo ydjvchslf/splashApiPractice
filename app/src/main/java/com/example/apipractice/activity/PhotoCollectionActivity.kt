@@ -46,8 +46,6 @@ class PhotoCollectionActivity : AppCompatActivity(),
     //로드할 기존검색히스토리
     private lateinit var existedSearchHistory: MutableList<SearchHistory>
 
-    private val photoList = ArrayList<Photo>()
-
     //뷰바인딩
     private var mBinding : ActivityPhotoBinding? = null
     private val binding get() = mBinding!!
@@ -76,17 +74,20 @@ class PhotoCollectionActivity : AppCompatActivity(),
 
        Log.d(TAG, "PhotoCollectionActivity - Main에서 전달받은 intent 확인 / photoArrayList.size: ${photoList.count()}, keyword: $keyword")
 
-        //만든 어댑터 설정
+        //사진결과 어댑터 설정
         binding.photoRecyclerView.apply {
-            layoutManager = GridLayoutManager(this@PhotoCollectionActivity, 2) //TODO 이것도 xml에서 설정해줄 수 있지 않을까? span도
+            layoutManager = GridLayoutManager(this@PhotoCollectionActivity, 2) //TODO:: 이것도 xml에서 설정해줄 수 있지 않을까? span도
             adapter = PhotoRecyclerApater(photoList)
         }
 
         //검색 히스토리 어댑터 설정
-        //만든 어댑터 설정
+        //TODO:: 생성자안에 콜백을 함수로 넘겨줄것!
         binding.historyRecyclerView.apply {
-            layoutManager = LinearLayoutManager(this@PhotoCollectionActivity, VERTICAL,true) //TODO 이것도 xml에서 설정해줄 수 있지 않을까?
-            adapter = SearchHistoryRecyclerAdapter()
+            layoutManager = LinearLayoutManager(this@PhotoCollectionActivity, VERTICAL,true) //TODO:: 이것도 xml에서 설정해줄 수 있지 않을까?
+            adapter = SearchHistoryRecyclerAdapter(searchHistoyList) {
+                    selectedSearchItems : SearchHistory -> listItemClicked(selectedSearchItems)
+            Log.d(TAG, "PhotoCollectionActivity 어댑터연결부분111 : 콜백받은 item : $selectedSearchItems ")
+            }
         }
 
         //써치뷰 부분
@@ -145,6 +146,13 @@ class PhotoCollectionActivity : AppCompatActivity(),
             setHintTextColor(android.graphics.Color.WHITE)
         }
         return true
+    }
+
+    //클릭해서 data를 얻어와야하니 생성자로 SearchHistory를 넣어준다, 글고 토스트로 띄워서 데이터 확인
+    private fun listItemClicked(searchHistory: SearchHistory){
+        Toast.makeText(this,
+            "PhotoCollectionActivity - listItemClicked()\n" +
+                    "term=> ${searchHistory.term}, timestamp=> ${searchHistory.timeStamp}",Toast.LENGTH_LONG).show()
     }
 
 
@@ -300,10 +308,13 @@ class PhotoCollectionActivity : AppCompatActivity(),
 
         SharedPrefManager.deleteAllSearchHistory()
 
+
         //변경된 검색 히스토리가 적용된 어댑터로 다시 세팅
         binding.historyRecyclerView.apply {
             layoutManager = LinearLayoutManager(this@PhotoCollectionActivity, VERTICAL,true) //TODO 이것도 xml에서 설정해줄 수 있지 않을까?
-            adapter = SearchHistoryRecyclerAdapter()
+            adapter = SearchHistoryRecyclerAdapter(searchHistoyList) {
+                selectedSearchItems : SearchHistory -> listItemClicked(selectedSearchItems)
+            }
         }
 
         Log.d(TAG, "초기화 후 Shared size => ${SharedPrefManager.getStoreSearchHistoryList()?.size}")
