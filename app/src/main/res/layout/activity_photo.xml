@@ -39,16 +39,18 @@
     <LinearLayout
         android:id="@+id/search_history_linear"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#FFD391"
-        android:visibility="invisible"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
         android:orientation="vertical"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
         >
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/search_history_bar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            android:background="#FFD391"
+            android:visibility="visible">
 
             <com.google.android.material.switchmaterial.SwitchMaterial
                 android:id="@+id/history_switch"
@@ -79,6 +81,7 @@
             android:id="@+id/history_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/white"
             android:stackFromBottom="true"
             app:reverseLayout="true"
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"

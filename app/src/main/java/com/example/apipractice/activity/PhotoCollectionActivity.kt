@@ -278,14 +278,14 @@ class PhotoCollectionActivity : AppCompatActivity(),
             true -> {
                 Log.d(TAG, "검색기록보기 On")
 
-                //검색 히스토리 reload
-
-
+                binding.searchHistoryBar.visibility = View.VISIBLE
                 binding.historyDeleteBtn.visibility = View.VISIBLE
                 binding.historyRecyclerView.visibility = View.VISIBLE
             }else -> {
                  Log.d(TAG, "검색기록보기 False")
+
             //히스토리 리싸이클러뷰(이거 쫌 고민), 전체삭제 btn invisible
+            binding.searchHistoryBar.visibility = View.VISIBLE
             binding.historyDeleteBtn.visibility = View.INVISIBLE
             binding.historyRecyclerView.visibility = View.INVISIBLE
             }
