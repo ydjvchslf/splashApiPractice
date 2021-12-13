@@ -16,6 +16,9 @@ object SharedPrefManager {
     private const val SHARED_SEARCH_HISTORY = "shared_search_history"
     private const val KEY_SEARCH_HISTORY = "key_search_history"
 
+    //삭제하기 위한 index
+    private var index : Int = 0
+
     //검색목록 저장 // SearchHistory List로 받아서 저장
     fun storeSearchHistoryList(searchHistory: MutableList<SearchHistory>){
         Log.d(TAG, "SharedPrefManager - storeSearchHistoryList() 검색목록 저장 호출")
@@ -58,6 +61,24 @@ object SharedPrefManager {
         val shared = App.instance.getSharedPreferences(SHARED_SEARCH_HISTORY, 0)
         val editor = shared.edit()
         editor.clear().commit()
+    }
+
+    //검색기록 1개만 삭제하기
+    fun deleteOneSearchHistory(keyword: String?){
+        Log.d(TAG, "SharedPrefManager - deleteOneSearchHistory() 검색기록 1개 삭제 호출")
+        //먼저 get해서 ArrayList안에 keyword랑 같은것을 삭제
+        val storedSearchHistoryList = getStoreSearchHistoryList()
+        //List for문 돌려서 SearchHisory.term = keword 랑 같으면
+        (0 until storedSearchHistoryList?.size!!-1 ).forEach { index ->
+            Log.d(TAG, "Shared - ${storedSearchHistoryList[index]}")
+            if (keyword.equals(storedSearchHistoryList[index].term)){
+                this.index = index
+                Log.d(TAG, "Shared - 찾은 index => $index")
+
+                storedSearchHistoryList.removeAt(index)
+
+            }
+        }
     }
 
 }

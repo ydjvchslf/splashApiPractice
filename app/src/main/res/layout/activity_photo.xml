@@ -25,14 +25,22 @@
             />
 
     </com.google.android.material.appbar.AppBarLayout>
-    <!-- 검색결과 보여주는 리사이클러뷰 -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/photo_recycler_view"
+    <!-- 사진 api 호출 검색결과 보여주는 리사이클러뷰 -->
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        />
+        android:layout_height="match_parent" >
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/photo_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="104dp"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <!-- 검색기록 보기/안보기 선택란, 기록 모두 지우기 imageView와 검색기록 리사이클러뷰 필요 -->
     <!-- 검색기록 뷰 -->
@@ -77,6 +85,7 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <!-- 검색기록 리싸이클러뷰 -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/history_recycler_view"
             android:layout_width="match_parent"
