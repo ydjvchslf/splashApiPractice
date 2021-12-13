@@ -10,15 +10,24 @@ import com.example.apipractice.R
 import com.example.apipractice.Utill.Constant.TAG
 import com.example.apipractice.Utill.RESPONSE_STATE
 import com.example.apipractice.Utill.SEARCH_TYPE
+import com.example.apipractice.Utill.SharedPrefManager
 import com.example.apipractice.Utill.onMyTextChanged
 import com.example.apipractice.retrofit.RetrofitManager
 import com.example.apipractice.databinding.ActivityMainBinding
+import com.example.apipractice.model.SearchHistory
+import java.text.SimpleDateFormat
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityMainBinding
 
     private var currentSearchType: SEARCH_TYPE = SEARCH_TYPE.PHOTO
+
+    //검색히스토리 변수 선언
+    private val searchHistoyList = arrayListOf<SearchHistory>()
+    //로드할 기존검색히스토리
+    private lateinit var existedSearchHistory: MutableList<SearchHistory>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,6 +36,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         Log.d(TAG, "MainActivity - onCreate() 호출")
+
+        //SharedPref 저장된 리스트 확인 -> 잘나온닷
+        Log.d(TAG, "MainActivity - SharedPref 저장된 리스트 확인 => ${SharedPrefManager.getStoreSearchHistoryList()}")
 
         //라디오 그룹 가져오기 //radioGroup안쓸꺼니까 _
         binding.searchTermRadioGroup.setOnCheckedChangeListener { _, checkedId ->
@@ -70,7 +82,7 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
-        //버튼 클릭시, 프로그레스바 보여주기
+        //버튼 클릭시, 프로그레스바 보여주기 //TODO :: PhotoCollectionActivity랑 중복
         binding.frameSearchBtn.searchBtn.setOnClickListener {
             Log.d(TAG, "검색버튼 클릭 / currentSearchType : $currentSearchType")
             binding.frameSearchBtn.searchBtn.text = "검색중"
@@ -88,6 +100,7 @@ class MainActivity : AppCompatActivity() {
                         //response헷갈리니까 변수로 정리
                         val photoArrayList = response
 
+                        // TODO:: ViewModel로 빼보기
                         //activity_photo를 호출하고 데이터 전달하기 위해
                         val intent = Intent(this, PhotoCollectionActivity::class.java)
                         //번들로 data로 담을거야 //직렬화로 줄여서 넘기 (이거 찾아보기)
@@ -95,12 +108,35 @@ class MainActivity : AppCompatActivity() {
                         bundle.putSerializable("photo_array_list", photoArrayList)
                         intent.putExtra("array_bundle", bundle)
                         intent.putExtra("keyword", keyword)
-                        //TODO ViewModel로 빼보기
 
-//                        //번들에 안담구 그냥 intent안에 다담으면 안됨??
-//                        // 번들에 ArrayList담으려면 꼭 직렬화로 해서 번틀로 넘겨야함?
-//                        intent.putExtra("photoArrayList", photoArrayList)
-//                        intent.putExtra("keyword", keyword)
+                        //검색 히스토리 저장
+                        //기존 검색 히스토리 로드
+                        existedSearchHistory = SharedPrefManager.getStoreSearchHistoryList()!!
+
+                        val searchHistory = SearchHistory("", "")
+
+                        if (keyword != null) {
+                            searchHistory.term = keyword
+                        }
+
+                        //검색히스토리 시간 얻어오기, ShardPref 저장하기
+                        val currentTime = Date().time
+                        val format = SimpleDateFormat("yyyy-MM-dd")
+
+                        val searchTermTime = format.format(currentTime) as String
+
+                        //Log.d(TAG, "현재시간은? $searchTermTime")
+
+                        searchHistory.timeStamp = searchTermTime
+
+                        existedSearchHistory.add(searchHistory)
+
+                        //searchHistoyList.add(searchHistory)
+
+                        //SharedPre 저장하기
+                        SharedPrefManager.storeSearchHistoryList(existedSearchHistory)
+
+                        Log.d(TAG, "SharedPref 저장된 searchHistoyList : $existedSearchHistory")
 
                         startActivity(intent)
 

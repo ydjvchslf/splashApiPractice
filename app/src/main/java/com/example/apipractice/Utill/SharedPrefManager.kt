@@ -6,6 +6,10 @@ import com.example.apipractice.App
 import com.example.apipractice.Utill.Constant.TAG
 import com.example.apipractice.model.SearchHistory
 import com.google.gson.Gson
+import android.content.SharedPreferences
+
+
+
 
 object SharedPrefManager {
 
@@ -48,4 +52,12 @@ object SharedPrefManager {
         }
         return storedSearchHistoryList
     }
+
+    fun deleteAllSearchHistory(){
+
+        val shared = App.instance.getSharedPreferences(SHARED_SEARCH_HISTORY, 0)
+        val editor = shared.edit()
+        editor.clear().commit()
+    }
+
 }

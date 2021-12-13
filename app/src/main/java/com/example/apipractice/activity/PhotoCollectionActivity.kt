@@ -1,7 +1,9 @@
 package com.example.apipractice.activity
 
+import android.annotation.SuppressLint
 import android.app.SearchManager
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.text.InputFilter
 import android.util.Log
@@ -9,18 +11,25 @@ import android.view.Menu
 import android.view.View
 import android.widget.CompoundButton
 import android.widget.EditText
+import android.widget.LinearLayout.HORIZONTAL
+import android.widget.LinearLayout.VERTICAL
 import android.widget.Toast
 //import android.widget.SearchView
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.ui.Alignment
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.apipractice.R
 import com.example.apipractice.Utill.Constant.TAG
+import com.example.apipractice.Utill.RESPONSE_STATE
 import com.example.apipractice.Utill.SharedPrefManager
 import com.example.apipractice.databinding.ActivityPhotoBinding
 import com.example.apipractice.model.Photo
 import com.example.apipractice.model.SearchHistory
 import com.example.apipractice.recyclerView.PhotoRecyclerApater
+import com.example.apipractice.recyclerView.SearchHistoryRecyclerAdapter
+import com.example.apipractice.retrofit.RetrofitManager
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -31,6 +40,11 @@ class PhotoCollectionActivity : AppCompatActivity(),
                                 View.OnClickListener // 전체삭제btn 이벤트 쓸라고
 {
 
+    //검색히스토리 변수 선언
+    private val searchHistoyList = arrayListOf<SearchHistory>()
+
+    //로드할 기존검색히스토리
+    private lateinit var existedSearchHistory: MutableList<SearchHistory>
 
     private val photoList = ArrayList<Photo>()
 
@@ -42,6 +56,7 @@ class PhotoCollectionActivity : AppCompatActivity(),
     private lateinit var mySearchView: SearchView
     private lateinit var mySearchViewEditText: EditText
 
+    @SuppressLint("WrongConstant")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //setContentView(R.layout.activity_photo)
@@ -61,10 +76,17 @@ class PhotoCollectionActivity : AppCompatActivity(),
 
        Log.d(TAG, "PhotoCollectionActivity - Main에서 전달받은 intent 확인 / photoArrayList.size: ${photoList.count()}, keyword: $keyword")
 
-    //만든 어댑터 설정
+        //만든 어댑터 설정
         binding.photoRecyclerView.apply {
             layoutManager = GridLayoutManager(this@PhotoCollectionActivity, 2) //TODO 이것도 xml에서 설정해줄 수 있지 않을까? span도
             adapter = PhotoRecyclerApater(photoList)
+        }
+
+        //검색 히스토리 어댑터 설정
+        //만든 어댑터 설정
+        binding.historyRecyclerView.apply {
+            layoutManager = LinearLayoutManager(this@PhotoCollectionActivity, VERTICAL,true) //TODO 이것도 xml에서 설정해줄 수 있지 않을까?
+            adapter = SearchHistoryRecyclerAdapter()
         }
 
         //써치뷰 부분
@@ -134,20 +156,16 @@ class PhotoCollectionActivity : AppCompatActivity(),
         //app_bar_menu가 포함되어있는 appBar를 무너뜨리는건가
         this.binding.topAppBar.collapseActionView()
 
-        //TODO:: 검색어 저장 (SharedPref 이용해서)
-        //TODO:: 사진검색 api 호출 (제일 마지막에)
+        //TODO:: 사진검색 호출api MainActivity랑 중복
 
         //검색어 저장
-        //검색히스토리 변수 선언
         val searchHistory = SearchHistory("", "")
-
-        val searchHistoyList = arrayListOf<SearchHistory>()
 
         if (query != null) {
             searchHistory.term = query
         }
 
-        //검색히스토리 시간 얻어오기
+        //검색히스토리 시간 얻어오기, ShardPref 저장하기
         val currentTime = Date().time
         val format = SimpleDateFormat("yyyy-MM-dd")
 
@@ -157,12 +175,82 @@ class PhotoCollectionActivity : AppCompatActivity(),
 
         searchHistory.timeStamp = searchTermTime
 
-        searchHistoyList.add(searchHistory)
+        //existedSearchHistory = SharedPrefManager.getStoreSearchHistoryList()!!
+
+        //existedSearchHistory.add(searchHistory)
 
         //SharedPre 저장하기
-        SharedPrefManager.storeSearchHistoryList(searchHistoyList)
+        //SharedPrefManager.storeSearchHistoryList(existedSearchHistory)
 
-        Log.d(TAG, "SharedPref 저장된 searchHistoyList : $searchHistoyList")
+        //Log.d(TAG, "SharedPref 저장된 searchHistoyList : $existedSearchHistory")
+
+        //SharedPre 가져오기
+        val storedSearchHistoryList = SharedPrefManager.getStoreSearchHistoryList()
+
+        Log.d(TAG, "사진검색 api호출 전 Shared : $storedSearchHistoryList, List.size() :${storedSearchHistoryList?.size} ")
+
+        //사진 검색 api 호출
+        query?.let{
+
+            RetrofitManager.searchPhotos(query, completion = {
+                    responseState, response -> //response : ArrayListof<Photo>
+                when(responseState) {
+                    RESPONSE_STATE.OKAY -> {
+                        Toast.makeText(this, "MainActivity - 호출성공!", Toast.LENGTH_SHORT).show()
+                        Log.d(TAG, "response OK! / reponseBody : ${response?.size}") // 10개씩 제공
+
+                        //response헷갈리니까 변수로 정리
+                        val photoArrayList = response
+
+                        // TODO:: ViewModel로 빼보기
+                        //activity_photo를 호출하고 데이터 전달하기 위해
+                        val intent = Intent(this, PhotoCollectionActivity::class.java)
+                        //번들로 data로 담을거야 //직렬화로 줄여서 넘기 (이거 찾아보기)
+                        val bundle = Bundle()
+                        bundle.putSerializable("photo_array_list", photoArrayList)
+                        intent.putExtra("array_bundle", bundle)
+                        intent.putExtra("keyword", query)
+
+                        //검색 히스토리 저장
+                        //기존 검색 히스토리 로드
+                        existedSearchHistory = SharedPrefManager.getStoreSearchHistoryList()!!
+
+                        val searchHistory = SearchHistory("", "")
+
+                        if (query != null) {
+                            searchHistory.term = query
+                        }
+
+                        //검색히스토리 시간 얻어오기, ShardPref 저장하기
+                        val currentTime = Date().time
+                        val format = SimpleDateFormat("yyyy-MM-dd")
+
+                        val searchTermTime = format.format(currentTime) as String
+
+                        //Log.d(TAG, "현재시간은? $searchTermTime")
+
+                        searchHistory.timeStamp = searchTermTime
+
+                        existedSearchHistory.add(searchHistory)
+
+                        //searchHistoyList.add(searchHistory)
+
+                        //SharedPre 저장하기
+                        SharedPrefManager.storeSearchHistoryList(existedSearchHistory)
+
+                        Log.d(TAG, "SharedPref 저장된 searchHistoyList : $existedSearchHistory")
+
+                        startActivity(intent)
+
+                    }
+                    RESPONSE_STATE.FAIL -> {
+                        Toast.makeText(this, "MainActivity 호출실패ㅡㅡ", Toast.LENGTH_SHORT).show()
+                        Log.d(TAG, "response No!")
+                    }
+                }
+            })
+        }
+
 
         return true
     }
@@ -189,17 +277,37 @@ class PhotoCollectionActivity : AppCompatActivity(),
         when(isChecked) {
             true -> {
                 Log.d(TAG, "검색기록보기 On")
+
+                //검색 히스토리 reload
+
+
                 binding.historyDeleteBtn.visibility = View.VISIBLE
+                binding.historyRecyclerView.visibility = View.VISIBLE
             }else -> {
                  Log.d(TAG, "검색기록보기 False")
             //히스토리 리싸이클러뷰(이거 쫌 고민), 전체삭제 btn invisible
             binding.historyDeleteBtn.visibility = View.INVISIBLE
+            binding.historyRecyclerView.visibility = View.INVISIBLE
             }
         }
     }
 
+    @SuppressLint("WrongConstant")
     override fun onClick(view: View?) {
-        Log.d(TAG, "전체삭제 Btn 클릭됐슴다")
+        Log.d(TAG, "전체삭제 Btn 클릭 => SharedPref 데이터 초기화")
+
+        binding.historyRecyclerView.visibility = View.INVISIBLE
+
+        SharedPrefManager.deleteAllSearchHistory()
+
+        //변경된 검색 히스토리가 적용된 어댑터로 다시 세팅
+        binding.historyRecyclerView.apply {
+            layoutManager = LinearLayoutManager(this@PhotoCollectionActivity, VERTICAL,true) //TODO 이것도 xml에서 설정해줄 수 있지 않을까?
+            adapter = SearchHistoryRecyclerAdapter()
+        }
+
+        Log.d(TAG, "초기화 후 Shared size => ${SharedPrefManager.getStoreSearchHistoryList()?.size}")
+
     }
 
 

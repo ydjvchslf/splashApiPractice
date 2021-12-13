@@ -40,8 +40,8 @@
         android:id="@+id/search_history_linear"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#FFCFCF"
-        android:visibility="visible"
+        android:background="#FFD391"
+        android:visibility="invisible"
         android:orientation="vertical"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
         >
@@ -79,6 +79,8 @@
             android:id="@+id/history_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:stackFromBottom="true"
+            app:reverseLayout="true"
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
             android:visibility="visible"
             />
