@@ -84,9 +84,10 @@ class PhotoCollectionActivity : AppCompatActivity(),
         //TODO:: 생성자안에 콜백을 함수로 넘겨줄것!
         binding.historyRecyclerView.apply {
             layoutManager = LinearLayoutManager(this@PhotoCollectionActivity, VERTICAL,true) //TODO:: 이것도 xml에서 설정해줄 수 있지 않을까?
-            adapter = SearchHistoryRecyclerAdapter(searchHistoyList) {
-                    selectedSearchItems : SearchHistory -> listItemClicked(selectedSearchItems)
-            Log.d(TAG, "PhotoCollectionActivity 어댑터연결부분111 : 콜백받은 item : $selectedSearchItems ")
+            adapter = SearchHistoryRecyclerAdapter() {
+                    //selectedSearchItem : SearchHistory -> listItemClicked(selectedSearchItems)
+                    selectedSearchItem : SearchHistory -> listItemClickedLambda(selectedSearchItem)
+            Log.d(TAG, "PhotoCollectionActivity 어댑터연결부분111 : 콜백받은 item : $selectedSearchItem ")
             }
         }
 
@@ -153,6 +154,12 @@ class PhotoCollectionActivity : AppCompatActivity(),
         Toast.makeText(this,
             "PhotoCollectionActivity - listItemClicked()\n" +
                     "term=> ${searchHistory.term}, timestamp=> ${searchHistory.timeStamp}",Toast.LENGTH_LONG).show()
+    }
+    // 위와 똑같음
+    val listItemClickedLambda: (SearchHistory) -> Unit = {
+        Toast.makeText(this,
+            "PhotoCollectionActivity - listItemClickedLambda()\n" +
+                    "term=> ${it.term}, timestamp=> ${it.timeStamp}",Toast.LENGTH_LONG).show()
     }
 
 
@@ -312,7 +319,7 @@ class PhotoCollectionActivity : AppCompatActivity(),
         //변경된 검색 히스토리가 적용된 어댑터로 다시 세팅
         binding.historyRecyclerView.apply {
             layoutManager = LinearLayoutManager(this@PhotoCollectionActivity, VERTICAL,true) //TODO 이것도 xml에서 설정해줄 수 있지 않을까?
-            adapter = SearchHistoryRecyclerAdapter(searchHistoyList) {
+            adapter = SearchHistoryRecyclerAdapter() {
                 selectedSearchItems : SearchHistory -> listItemClicked(selectedSearchItems)
             }
         }

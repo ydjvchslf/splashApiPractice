@@ -12,8 +12,7 @@ import com.example.apipractice.databinding.SearchHistoryItemBinding
 import com.example.apipractice.model.SearchHistory
 
 class SearchHistoryRecyclerAdapter(
-    private val dataList:List<SearchHistory>,
-    private val clickListner:(SearchHistory)->Unit) :
+    private val clickListner: (SearchHistory) -> Unit) :
     RecyclerView.Adapter<SearchHistoryRecyclerAdapter.SearchHistoryViewHolder>(){
 
     //SharedPref에 저장된 storedSearchHistoryList 인지, 아니면 그냥 data class SearchHistory?
@@ -24,12 +23,6 @@ class SearchHistoryRecyclerAdapter(
 
     {
         //뷰 가져오기 (뷰바인딩 = xml)
-
-        //생성자를 전역변수화 시킴으로써 아래와 같은 불필요한 작업 사라짐
-        //val searchRvTerm = binding.searchRvTerm
-        //val searchRvTime = binding.searchRvTime
-        //val deleteOneBtn = binding.deleteOneBtn // 한개한개 삭제해주려고
-        //val constraintSearchItem = binding.constraintSearchItem // rv 전체 몸통 클릭할때 처리해주려고
 
         //search_history_item에 데이터 끼워주기
         fun bindWithView(searchHistoryItem: SearchHistory){
