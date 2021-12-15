@@ -11,13 +11,11 @@ import android.view.Menu
 import android.view.View
 import android.widget.CompoundButton
 import android.widget.EditText
-import android.widget.LinearLayout.HORIZONTAL
 import android.widget.LinearLayout.VERTICAL
 import android.widget.Toast
 //import android.widget.SearchView
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.ui.Alignment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.apipractice.R
@@ -42,6 +40,9 @@ class PhotoCollectionActivity : AppCompatActivity(),
 
     //검색히스토리 변수 선언
     private val searchHistoyList = arrayListOf<SearchHistory>()
+
+    //long press에 쓰일 변수
+    private var result = ""
 
     //로드할 기존검색히스토리
     private lateinit var existedSearchHistory: MutableList<SearchHistory>
@@ -81,31 +82,7 @@ class PhotoCollectionActivity : AppCompatActivity(),
         }
 
         //검색 히스토리 어댑터 설정
-        //TODO:: 생성자안에 콜백을 함수로 넘겨줄것!
-        binding.historyRecyclerView.apply {
-            layoutManager = LinearLayoutManager(this@PhotoCollectionActivity, VERTICAL, true) //TODO:: 이것도 xml에서 설정해줄 수 있지 않을까?
-            //어댑터 설정부분
-            adapter = SearchHistoryRecyclerAdapter(clickListner = {
-                listItemClicked(it)
-                Log.d(TAG, "콜백 받아온 term: ${it.term}, timestamp: ${it.timeStamp}")
-            })
-//            //어댑터 설정부분2 마지막 인자가 람다라면 소괄호 없애고 밖으로 뺄 수 있다
-//            adapter = SearchHistoryRecyclerAdapter {
-//                listItemClicked(it)
-//                Log.d(TAG, "콜백 받아온 term: ${it.term}, timestamp: ${it.timeStamp}")
-//            }
-//            // it대신 명시적으로 보여줌
-//            adapter = SearchHistoryRecyclerAdapter { selectedSearchHistory ->
-//                listItemClicked(selectedSearchHistory)
-//                Log.d(TAG, "콜백 받아온 term: ${selectedSearchHistory.term}, timestamp: ${selectedSearchHistory.timeStamp}")
-//            }
-//            // it대신 명시적으로 써줬는데, 타입까지 써준 것
-//            adapter = SearchHistoryRecyclerAdapter { selectedSearchHistory: SearchHistory ->
-//                listItemClicked(selectedSearchHistory)
-//                Log.d(TAG, "콜백 받아온 term: ${selectedSearchHistory.term}, timestamp: ${selectedSearchHistory.timeStamp}")
-//            }
-        }
-
+        setSearchHistoryAdapter()
 
         //써치뷰 부분
         //검색한 keyword를 앱바에 띄워줘야 하니까
@@ -118,7 +95,6 @@ class PhotoCollectionActivity : AppCompatActivity(),
 
         //전체삭제 부분 연결
         binding.historyDeleteBtn.setOnClickListener(this)
-
 
     }
 
@@ -176,6 +152,16 @@ class PhotoCollectionActivity : AppCompatActivity(),
         Toast.makeText(this,
             "PhotoCollectionActivity - listItemClickedLambda()\n" +
                     "term=> ${it.term}, timestamp=> ${it.timeStamp}",Toast.LENGTH_LONG).show()
+    }
+
+    //long click -> item 삭제
+    private fun longClickedItem(searchHistory: SearchHistory): Boolean{
+        Log.d(TAG, "PhotoCollectionActivity - longClickedItem() long press 호출 \n" +
+                "받아온 item: $searchHistory")
+        Toast.makeText(this,
+            "long press 호출 받아온 item=> $searchHistory",Toast.LENGTH_LONG).show()
+
+        return true
     }
 
 
@@ -331,21 +317,35 @@ class PhotoCollectionActivity : AppCompatActivity(),
 
         SharedPrefManager.deleteAllSearchHistory()
 
-
         //변경된 검색 히스토리가 적용된 어댑터로 다시 세팅
+        setSearchHistoryAdapter()
+    }
+
+    //SearchHistoryRecyclerView 어댑터 세팅하는 함수 따로 생성
+    @SuppressLint("WrongConstant")
+    fun setSearchHistoryAdapter(){
         binding.historyRecyclerView.apply {
-            layoutManager = LinearLayoutManager(this@PhotoCollectionActivity, VERTICAL,true) //TODO 이것도 xml에서 설정해줄 수 있지 않을까?
-//            adapter = SearchHistoryRecyclerAdapter() {selectedSearchItems : SearchHistory ->
-//                listItemClicked(selectedSearchItems)
-
-            adapter = SearchHistoryRecyclerAdapter(listItemClickedLambda)
-
-            }
+            layoutManager = LinearLayoutManager(this@PhotoCollectionActivity, VERTICAL, true) //TODO:: 이것도 xml에서 설정해줄 수 있지 않을까?
+            //어댑터 설정부분
+            adapter = SearchHistoryRecyclerAdapter(clickListener = { firstItem ->
+                listItemClicked(firstItem) }, longClickListener = { secondItem ->
+                longClickedItem(secondItem)} )
+//            //어댑터 설정부분2 마지막 인자가 람다라면 소괄호 없애고 밖으로 뺄 수 있다
+//            adapter = SearchHistoryRecyclerAdapter {
+//                listItemClicked(it)
+//                Log.d(TAG, "콜백 받아온 term: ${it.term}, timestamp: ${it.timeStamp}")
+//            }
+//            // it대신 명시적으로 보여줌
+//            adapter = SearchHistoryRecyclerAdapter { selectedSearchHistory ->
+//                listItemClicked(selectedSearchHistory)
+//                Log.d(TAG, "콜백 받아온 term: ${selectedSearchHistory.term}, timestamp: ${selectedSearchHistory.timeStamp}")
+//            }
+//            // it대신 명시적으로 써줬는데, 타입까지 써준 것
+//            adapter = SearchHistoryRecyclerAdapter { selectedSearchHistory: SearchHistory ->
+//                listItemClicked(selectedSearchHistory)
+//                Log.d(TAG, "콜백 받아온 term: ${selectedSearchHistory.term}, timestamp: ${selectedSearchHistory.timeStamp}")
+//            }
+        }//apply
     }
-
-       // Log.d(TAG, "초기화 후 Shared size => ${SharedPrefManager.getStoreSearchHistoryList()?.size}")
-
-    }
-
 
 }
