@@ -83,13 +83,29 @@ class PhotoCollectionActivity : AppCompatActivity(),
         //검색 히스토리 어댑터 설정
         //TODO:: 생성자안에 콜백을 함수로 넘겨줄것!
         binding.historyRecyclerView.apply {
-            layoutManager = LinearLayoutManager(this@PhotoCollectionActivity, VERTICAL,true) //TODO:: 이것도 xml에서 설정해줄 수 있지 않을까?
-            adapter = SearchHistoryRecyclerAdapter() {
-                    //selectedSearchItem : SearchHistory -> listItemClicked(selectedSearchItems)
-                    selectedSearchItem : SearchHistory -> listItemClickedLambda(selectedSearchItem)
-            Log.d(TAG, "PhotoCollectionActivity 어댑터연결부분111 : 콜백받은 item : $selectedSearchItem ")
-            }
+            layoutManager = LinearLayoutManager(this@PhotoCollectionActivity, VERTICAL, true) //TODO:: 이것도 xml에서 설정해줄 수 있지 않을까?
+            //어댑터 설정부분
+            adapter = SearchHistoryRecyclerAdapter(clickListner = {
+                listItemClicked(it)
+                Log.d(TAG, "콜백 받아온 term: ${it.term}, timestamp: ${it.timeStamp}")
+            })
+//            //어댑터 설정부분2 마지막 인자가 람다라면 소괄호 없애고 밖으로 뺄 수 있다
+//            adapter = SearchHistoryRecyclerAdapter {
+//                listItemClicked(it)
+//                Log.d(TAG, "콜백 받아온 term: ${it.term}, timestamp: ${it.timeStamp}")
+//            }
+//            // it대신 명시적으로 보여줌
+//            adapter = SearchHistoryRecyclerAdapter { selectedSearchHistory ->
+//                listItemClicked(selectedSearchHistory)
+//                Log.d(TAG, "콜백 받아온 term: ${selectedSearchHistory.term}, timestamp: ${selectedSearchHistory.timeStamp}")
+//            }
+//            // it대신 명시적으로 써줬는데, 타입까지 써준 것
+//            adapter = SearchHistoryRecyclerAdapter { selectedSearchHistory: SearchHistory ->
+//                listItemClicked(selectedSearchHistory)
+//                Log.d(TAG, "콜백 받아온 term: ${selectedSearchHistory.term}, timestamp: ${selectedSearchHistory.timeStamp}")
+//            }
         }
+
 
         //써치뷰 부분
         //검색한 keyword를 앱바에 띄워줘야 하니까
@@ -156,7 +172,7 @@ class PhotoCollectionActivity : AppCompatActivity(),
                     "term=> ${searchHistory.term}, timestamp=> ${searchHistory.timeStamp}",Toast.LENGTH_LONG).show()
     }
     // 위와 똑같음
-    val listItemClickedLambda: (SearchHistory) -> Unit = {
+    private val listItemClickedLambda: (SearchHistory) -> Unit = {
         Toast.makeText(this,
             "PhotoCollectionActivity - listItemClickedLambda()\n" +
                     "term=> ${it.term}, timestamp=> ${it.timeStamp}",Toast.LENGTH_LONG).show()
@@ -319,12 +335,15 @@ class PhotoCollectionActivity : AppCompatActivity(),
         //변경된 검색 히스토리가 적용된 어댑터로 다시 세팅
         binding.historyRecyclerView.apply {
             layoutManager = LinearLayoutManager(this@PhotoCollectionActivity, VERTICAL,true) //TODO 이것도 xml에서 설정해줄 수 있지 않을까?
-            adapter = SearchHistoryRecyclerAdapter() {
-                selectedSearchItems : SearchHistory -> listItemClicked(selectedSearchItems)
-            }
-        }
+//            adapter = SearchHistoryRecyclerAdapter() {selectedSearchItems : SearchHistory ->
+//                listItemClicked(selectedSearchItems)
 
-        Log.d(TAG, "초기화 후 Shared size => ${SharedPrefManager.getStoreSearchHistoryList()?.size}")
+            adapter = SearchHistoryRecyclerAdapter(listItemClickedLambda)
+
+            }
+    }
+
+       // Log.d(TAG, "초기화 후 Shared size => ${SharedPrefManager.getStoreSearchHistoryList()?.size}")
 
     }
 
