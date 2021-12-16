@@ -3,13 +3,13 @@ package com.example.apipractice.recyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.lifecycle.liveData
 import androidx.recyclerview.widget.RecyclerView
 import com.example.apipractice.R
-import com.example.apipractice.Utill.Constant.TAG
-import com.example.apipractice.Utill.SharedPrefManager
+import com.example.apipractice.utill.Constant.TAG
+import com.example.apipractice.utill.SharedPrefManager
 import com.example.apipractice.databinding.SearchHistoryItemBinding
 import com.example.apipractice.model.SearchHistory
+import com.example.apipractice.viewModel.SearchHistoryViewModel
 
 class SearchHistoryRecyclerAdapter(
     private val clickListener:(SearchHistory) -> Unit ,
@@ -23,9 +23,8 @@ class SearchHistoryRecyclerAdapter(
     private var index: Int = 0
 
     //수정 전: 생성자(binding: SearchHistroyItemBinding)
-    inner class SearchHistoryViewHolder(private val binding: SearchHistoryItemBinding) : RecyclerView.ViewHolder(binding.root)
-
-    {
+    inner class SearchHistoryViewHolder(private val binding: SearchHistoryItemBinding)
+                                        : RecyclerView.ViewHolder(binding.root){
         //뷰 가져오기 (뷰바인딩 = xml)
 
         //search_history_item에 데이터 끼워주기

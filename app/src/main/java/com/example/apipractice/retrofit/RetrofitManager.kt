@@ -1,9 +1,9 @@
 package com.example.apipractice.retrofit
 
 import android.util.Log
-import com.example.apipractice.Utill.Constant
-import com.example.apipractice.Utill.Constant.TAG
-import com.example.apipractice.Utill.RESPONSE_STATE
+import com.example.apipractice.utill.Constant
+import com.example.apipractice.utill.Constant.TAG
+import com.example.apipractice.utill.RESPONSE_STATE
 import com.example.apipractice.model.Photo
 import com.google.gson.JsonElement
 import retrofit2.Call

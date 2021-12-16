@@ -4,10 +4,10 @@ import android.os.Looper
 import android.util.Log
 import android.widget.Toast
 import com.example.apipractice.App
-import com.example.apipractice.Utill.Constant
-import com.example.apipractice.Utill.Constant.TAG
-import com.example.apipractice.Utill.isJsonArray
-import com.example.apipractice.Utill.isJsonObject
+import com.example.apipractice.utill.Constant
+import com.example.apipractice.utill.Constant.TAG
+import com.example.apipractice.utill.isJsonArray
+import com.example.apipractice.utill.isJsonObject
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response

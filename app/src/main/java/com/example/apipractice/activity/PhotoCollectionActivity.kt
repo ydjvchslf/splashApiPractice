@@ -16,18 +16,21 @@ import android.widget.Toast
 //import android.widget.SearchView
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.apipractice.R
-import com.example.apipractice.Utill.Constant.TAG
-import com.example.apipractice.Utill.RESPONSE_STATE
-import com.example.apipractice.Utill.SharedPrefManager
+import com.example.apipractice.utill.Constant.TAG
+import com.example.apipractice.utill.RESPONSE_STATE
+import com.example.apipractice.utill.SharedPrefManager
 import com.example.apipractice.databinding.ActivityPhotoBinding
 import com.example.apipractice.model.Photo
 import com.example.apipractice.model.SearchHistory
 import com.example.apipractice.recyclerView.PhotoRecyclerApater
 import com.example.apipractice.recyclerView.SearchHistoryRecyclerAdapter
 import com.example.apipractice.retrofit.RetrofitManager
+import com.example.apipractice.viewModel.SearchHistoryViewModel
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -37,6 +40,8 @@ class PhotoCollectionActivity : AppCompatActivity(),
                                 CompoundButton.OnCheckedChangeListener,  //material내장 switch
                                 View.OnClickListener // 전체삭제btn 이벤트 쓸라고
 {
+    //뷰모델 선언
+    private lateinit var searchHistoryViewModel: SearchHistoryViewModel
 
     //검색히스토리 변수 선언
     private val searchHistoyList = arrayListOf<SearchHistory>()
@@ -63,6 +68,12 @@ class PhotoCollectionActivity : AppCompatActivity(),
         setContentView(binding.root)
 
         Log.d(TAG, "PhotoCollectionActivity - onCreate() 호출")
+
+        //뷰모델 가져오기
+        searchHistoryViewModel = ViewModelProvider(this)[SearchHistoryViewModel::class.java]
+        searchHistoryViewModel.searchHistoryList.observe(this) {
+
+        }
 
        //MainActivity에서 intent에서 받은 data 추출하기
 //        bundle.putSerializable("photo_array_list", photoArrayList)
@@ -154,12 +165,16 @@ class PhotoCollectionActivity : AppCompatActivity(),
                     "term=> ${it.term}, timestamp=> ${it.timeStamp}",Toast.LENGTH_LONG).show()
     }
 
-    //long click -> item 삭제
+    //long click -> 중복값 체크
     private fun longClickedItem(searchHistory: SearchHistory): Boolean{
         Log.d(TAG, "PhotoCollectionActivity - longClickedItem() long press 호출 \n" +
                 "받아온 item: $searchHistory")
         Toast.makeText(this,
             "long press 호출 받아온 item=> $searchHistory",Toast.LENGTH_LONG).show()
+
+        val term = searchHistory.term
+
+        searchHistoryViewModel.checkDuplicationOfTerm(term)
 
         return true
     }
@@ -329,7 +344,7 @@ class PhotoCollectionActivity : AppCompatActivity(),
             //어댑터 설정부분
             adapter = SearchHistoryRecyclerAdapter(clickListener = { firstItem ->
                 listItemClicked(firstItem) }, longClickListener = { secondItem ->
-                longClickedItem(secondItem)} )
+                longClickedItem(secondItem)})
 //            //어댑터 설정부분2 마지막 인자가 람다라면 소괄호 없애고 밖으로 뺄 수 있다
 //            adapter = SearchHistoryRecyclerAdapter {
 //                listItemClicked(it)

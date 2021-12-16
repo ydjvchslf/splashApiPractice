@@ -7,11 +7,11 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import com.example.apipractice.R
-import com.example.apipractice.Utill.Constant.TAG
-import com.example.apipractice.Utill.RESPONSE_STATE
-import com.example.apipractice.Utill.SEARCH_TYPE
-import com.example.apipractice.Utill.SharedPrefManager
-import com.example.apipractice.Utill.onMyTextChanged
+import com.example.apipractice.utill.Constant.TAG
+import com.example.apipractice.utill.RESPONSE_STATE
+import com.example.apipractice.utill.SEARCH_TYPE
+import com.example.apipractice.utill.SharedPrefManager
+import com.example.apipractice.utill.onMyTextChanged
 import com.example.apipractice.retrofit.RetrofitManager
 import com.example.apipractice.databinding.ActivityMainBinding
 import com.example.apipractice.model.SearchHistory

@@ -1,4 +1,4 @@
-package com.example.apipractice.Utill
+package com.example.apipractice.utill
 
 import android.text.Editable
 import android.text.TextWatcher

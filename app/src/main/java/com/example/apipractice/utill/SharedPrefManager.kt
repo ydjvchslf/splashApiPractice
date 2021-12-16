@@ -1,9 +1,9 @@
-package com.example.apipractice.Utill
+package com.example.apipractice.utill
 
 import android.content.Context
 import android.util.Log
 import com.example.apipractice.App
-import com.example.apipractice.Utill.Constant.TAG
+import com.example.apipractice.utill.Constant.TAG
 import com.example.apipractice.model.SearchHistory
 import com.google.gson.Gson
 

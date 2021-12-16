@@ -1,4 +1,4 @@
-package com.example.apipractice.Utill
+package com.example.apipractice.utill
 
 object Constant {
     const val TAG = "로그"
