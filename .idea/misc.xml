@@ -6,14 +6,20 @@
         <entry key="app/src/main/res/drawable/_2561211_circle_x_icon.xml" value="0.23125" />
         <entry key="app/src/main/res/drawable/picture.xml" value="0.21851851851851853" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/activity_photo.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/activity_nav.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_photo.xml" value="0.165" />
         <entry key="app/src/main/res/layout/activity_photo_collection.xml" value="0.375" />
+        <entry key="app/src/main/res/layout/fragment_first.xml" value="0.39114583333333336" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.2759259259259259" />
         <entry key="app/src/main/res/layout/fragment_search.xml" value="0.18645833333333334" />
+        <entry key="app/src/main/res/layout/fragment_second.xml" value="0.2759259259259259" />
+        <entry key="app/src/main/res/layout/fragment_third.xml" value="0.2759259259259259" />
         <entry key="app/src/main/res/layout/layout_button_search.xml" value="0.25" />
         <entry key="app/src/main/res/layout/photo_item.xml" value="0.25" />
         <entry key="app/src/main/res/layout/recent_keyword.xml" value="0.15885416666666666" />
         <entry key="app/src/main/res/layout/search_history_item.xml" value="0.375" />
         <entry key="app/src/main/res/layout/top_app_bar.xml" value="0.28425925925925927" />
+        <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.31666666666666665" />
         <entry key="app/src/main/res/menu/top_app_bar.xml" value="0.28425925925925927" />
         <entry key="app/src/main/res/menu/top_app_bar_menu.xml" value="0.22" />
       </map>

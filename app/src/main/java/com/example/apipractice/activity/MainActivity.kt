@@ -151,5 +151,12 @@ class MainActivity : AppCompatActivity() {
         }
 
 
+        //네비게이션 버튼 추가
+        binding.navBtn.setOnClickListener {
+            Log.d(TAG, "네비버튼 클릭")
+            val nextIntent = Intent(this, NavActivity::class.java)
+            startActivity(nextIntent)
+        }
+
     }
 }

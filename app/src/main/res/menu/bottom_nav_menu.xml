@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_first"
+        android:title="첫번째"
+        android:icon="@drawable/favorit"/>
+
+    <item
+        android:id="@+id/menu_second"
+        android:title="두번째"
+        android:icon="@drawable/ic_baseline_thumb_up_24"/>
+
+    <item
+        android:id="@+id/menu_third"
+        android:title="세번째"
+        android:icon="@drawable/user"/>
+</menu>

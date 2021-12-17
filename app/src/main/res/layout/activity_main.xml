@@ -7,64 +7,71 @@
     tools:context=".activity.MainActivity"
     android:orientation="vertical">
 
-    <ImageView
-        android:layout_width="180dp"
-        android:layout_height="180dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="100dp"
-        android:src="@drawable/ic_android_black_24dp"/>
+        <ImageView
+            android:layout_width="180dp"
+            android:layout_height="180dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="100dp"
+            android:src="@drawable/ic_android_black_24dp"/>
 
-    <RadioGroup
-        android:id="@+id/search_term_radio_group"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_gravity="center">
-
-        <com.google.android.material.radiobutton.MaterialRadioButton
-            android:id="@+id/photo_search_radio_btn"
+        <RadioGroup
+            android:id="@+id/search_term_radio_group"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="사진검색"
-            android:checked="true"
-            android:layout_marginEnd="20dp"/>
+            android:orientation="horizontal"
+            android:layout_gravity="center">
 
-        <com.google.android.material.radiobutton.MaterialRadioButton
-            android:id="@+id/user_search_radio_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="사용자검색"
-            android:checked="false" />
-    </RadioGroup>
+            <com.google.android.material.radiobutton.MaterialRadioButton
+                android:id="@+id/photo_search_radio_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="사진검색"
+                android:checked="true"
+                android:layout_marginEnd="20dp"/>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/search_term_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="@style/ShapeAppearance.MaterialComponents.MediumComponent"
-        app:helperText="검색어를 입력하세요"
-        app:startIconDrawable="@drawable/picture"
-        app:counterEnabled="true"
-        app:counterMaxLength="12"
-        app:endIconMode="clear_text"
-        android:hint="사진검색">
-        <!-- string으로 나중에 리팩토링 -->
+            <com.google.android.material.radiobutton.MaterialRadioButton
+                android:id="@+id/user_search_radio_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="사용자검색"
+                android:checked="false" />
+        </RadioGroup>
 
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/search_term_edit_text"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/search_term_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:maxLength="12"
-            android:inputType="text"
-            android:layout_marginBottom="5dp"/>
+            style="@style/ShapeAppearance.MaterialComponents.MediumComponent"
+            app:helperText="검색어를 입력하세요"
+            app:startIconDrawable="@drawable/picture"
+            app:counterEnabled="true"
+            app:counterMaxLength="12"
+            app:endIconMode="clear_text"
+            android:hint="사진검색">
+            <!-- string으로 나중에 리팩토링 -->
 
-    </com.google.android.material.textfield.TextInputLayout>
 
-    <include
-        android:id="@+id/frame_search_btn"
-        layout="@layout/layout_button_search" />
-    <!-- 왜 색깔 다르지? -->
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/search_term_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLength="12"
+                android:inputType="text"
+                android:layout_marginBottom="5dp"/>
 
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/nav_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="100dp"
+            android:text="Nav 이동"/>
+
+        <include
+            android:id="@+id/frame_search_btn"
+            layout="@layout/layout_button_search" />
+        <!-- 왜 색깔 다르지? -->
 
 </LinearLayout>
