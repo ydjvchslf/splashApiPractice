@@ -14,9 +14,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApp">
         <activity
-            android:name=".activity.NavActivity"
-            android:exported="true" />
-        <activity
             android:name=".activity.MainActivity"
             android:exported="true">
             <intent-filter>
@@ -26,6 +23,7 @@
             </intent-filter>
         </activity> <!-- 액티비티 추가는 여기에 꼭 해줘야해! frag는 안해줘도 됨 -->
         <activity android:name=".activity.PhotoCollectionActivity" />
+        <activity android:name=".activity.NavActivity" />
     </application>
 
 </manifest>

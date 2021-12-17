@@ -7,9 +7,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.apipractice.R
+import com.example.apipractice.databinding.FragmentThirdBinding
 import com.example.apipractice.utill.Constant
 
 class ThirdFragment : Fragment() {
+
+    private var mBinding : FragmentThirdBinding? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.d(Constant.TAG, "ThirdFragment - onCreate() called")
@@ -21,6 +25,13 @@ class ThirdFragment : Fragment() {
     ): View? {
         Log.d(Constant.TAG, "ThirdFragment - onCreateView() called")
 
-        return inflater.inflate(R.layout.fragment_third, container, false)
+        val binding = FragmentThirdBinding.inflate(inflater, container, false)
+        mBinding = binding
+        return mBinding?.root
+    }
+
+    override fun onDestroy() {
+        mBinding = null
+        super.onDestroy()
     }
 }

@@ -40,20 +40,35 @@ class NavActivity : AppCompatActivity() {
         NavigationUI.setupWithNavController(binding.bottomNav, navController)
 
         //버튼 클릭 리스너
-        binding.bottomNav.setOnItemSelectedListener { menuItem ->
-            when(menuItem.itemId) {
-                R.id.menu_first -> {
-                    Log.d(TAG, "1 메뉴 클릭")
-                }
-                R.id.menu_second -> {
-                    Log.d(TAG, "2째 메뉴 클릭")
-                }
-                R.id.menu_third -> {
-                    Log.d(TAG, "3번째 메뉴 클릭")
-                }
-            }
-            true
-            }
+//        binding.bottomNav.setOnItemSelectedListener { menuItem ->
+//            when(menuItem.itemId) {
+//                R.id.menu_first -> {
+//                    Log.d(TAG, "1 메뉴 클릭")
+//                }
+//                R.id.menu_second -> {
+//                    Log.d(TAG, "2째 메뉴 클릭")
+//                }
+//                R.id.menu_third -> {
+//                    Log.d(TAG, "3번째 메뉴 클릭")
+//                }
+//            }
+//            true
+//            }
 
+    }
+
+    private val onBottomNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener{
+        when(it.itemId){
+            R.id.menu_first -> {
+                Log.d(TAG, "MainActivity - 홈버튼클릭")
+            }
+            R.id.menu_second -> {
+                Log.d(TAG, "MainActivity - 랭킹클릭")
+            }
+            R.id.menu_third -> {
+                Log.d(TAG, "MainActivity - 프로필클릭")
+            }
+        }
+        true
     }
 }
