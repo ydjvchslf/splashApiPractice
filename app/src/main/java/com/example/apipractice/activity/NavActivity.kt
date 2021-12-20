@@ -60,13 +60,13 @@ class NavActivity : AppCompatActivity() {
     private val onBottomNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener{
         when(it.itemId){
             R.id.menu_first -> {
-                Log.d(TAG, "MainActivity - 홈버튼클릭")
+                Log.d(TAG, "NavActivity - 1메뉴 클릭")
             }
             R.id.menu_second -> {
-                Log.d(TAG, "MainActivity - 랭킹클릭")
+                Log.d(TAG, "NavActivity - 2메뉴 클릭")
             }
             R.id.menu_third -> {
-                Log.d(TAG, "MainActivity - 프로필클릭")
+                Log.d(TAG, "NavActivity - 3메뉴 클릭")
             }
         }
         true
