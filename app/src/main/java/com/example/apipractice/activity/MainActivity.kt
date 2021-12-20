@@ -157,6 +157,5 @@ class MainActivity : AppCompatActivity() {
             val nextIntent = Intent(this, NavActivity::class.java)
             startActivity(nextIntent)
         }
-
     }
 }
