@@ -3,6 +3,7 @@ package com.example.apipractice.activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
 import android.view.View
 import android.widget.Toast
@@ -156,6 +157,12 @@ class MainActivity : AppCompatActivity() {
             Log.d(TAG, "네비버튼 클릭")
             val nextIntent = Intent(this, NavActivity::class.java)
             startActivity(nextIntent)
+        }
+
+        //wifi setting
+        binding.wifiBtn.setOnClickListener {
+            val intent = Intent(Settings.ACTION_WIFI_SETTINGS)
+            startActivityForResult(intent, 99)
         }
     }
 }

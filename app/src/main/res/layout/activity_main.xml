@@ -69,6 +69,14 @@
             android:layout_marginTop="100dp"
             android:text="Nav 이동"/>
 
+        <Button
+            android:id="@+id/wifi_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="100dp"
+            android:text="Wifi 세팅"/>
+
         <include
             android:id="@+id/frame_search_btn"
             layout="@layout/layout_button_search" />
